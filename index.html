@@ -9,15 +9,16 @@
         body { background-color: #f4f6f9; color: #333; overflow-x: hidden; }
         
         /* Navbar */
-        nav { background-color: #1a2a3a; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        nav { background-color: #1a2a3a; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
         .logo { font-size: 22px; font-weight: bold; color: #00dbc6; display: flex; align-items: center; gap: 8px; cursor: pointer; }
         .badge-cloud { background: #007bff; color: white; font-size: 11px; padding: 3px 8px; border-radius: 12px; font-weight: normal; }
-        .nav-links button { background: none; border: none; color: #a0aec0; margin-left: 20px; cursor: pointer; font-size: 15px; font-weight: 500; }
+        .nav-links button { background: none; border: none; color: #a0aec0; margin-left: 20px; cursor: pointer; font-size: 15px; font-weight: 500; position: relative; }
         .nav-links button:hover, .nav-links button.active { color: #00dbc6; }
+        .cart-count { background: #ff4d4d; color: white; font-size: 11px; padding: 2px 6px; border-radius: 50%; position: absolute; top: -10px; right: -12px; font-weight: bold; }
         
         .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; min-height: 70vh; }
         
-        /* Páginas (Escondidas por padrão, exceto a ativa) */
+        /* Páginas SPA */
         .page { display: none; opacity: 0; transform: translateY(20px); }
         .page.active { display: block; opacity: 1; transform: translateY(0); }
 
@@ -38,45 +39,42 @@
         .card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
         .card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
         
-        .card-img { height: 180px; background: #eaedf2; display: flex; align-items: center; justify-content: center; font-size: 50px; color: #a0aec0; position: relative; }
+        .card-img { height: 160px; background: #eaedf2; display: flex; align-items: center; justify-content: center; font-size: 50px; color: #a0aec0; position: relative; }
         .tag-categoria { position: absolute; top: 10px; left: 10px; background: rgba(26, 42, 58, 0.85); color: white; font-size: 11px; padding: 4px 8px; border-radius: 4px; text-transform: uppercase; font-weight: bold; }
         
         .card-body { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
-        .card-title { font-size: 18px; color: #1a2a3a; margin-bottom: 10px; font-weight: 600; }
-        .card-text { font-size: 14px; color: #666; margin-bottom: 15px; line-height: 1.4; }
-        .card-price { font-size: 22px; font-weight: bold; color: #1a2a3a; margin-top: auto; margin-bottom: 15px; display: flex; align-items: baseline; gap: 4px; }
-        .card-price span { font-size: 14px; font-weight: normal; color: #888; }
+        .card-title { font-size: 17px; color: #1a2a3a; margin-bottom: 8px; font-weight: 600; }
+        .card-text { font-size: 13px; color: #666; margin-bottom: 15px; line-height: 1.4; flex-grow: 1; }
+        .card-price { font-size: 20px; font-weight: bold; color: #1a2a3a; margin-bottom: 15px; display: flex; align-items: baseline; gap: 4px; }
+        .card-price span { font-size: 13px; font-weight: normal; color: #888; }
         
-        .btn-action { background-color: #00dbc6; color: #1a2a3a; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px; width: 100%; text-align: center; }
+        .btn-action { background-color: #00dbc6; color: #1a2a3a; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px; width: 100%; text-align: center; }
         .btn-action:hover { background-color: #00bfae; transform: scale(1.02); }
 
         /* Estilo Exclusivo The Sims Mode */
         .sims-headline { color: #3ba526 !important; font-weight: bold; }
         .sims-headline::after { background: #3ba526 !important; }
         .plumbob-icon { font-size: 24px; animation: float 2s ease-in-out infinite; display: inline-block; }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
         
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-            100% { transform: translateY(0px); }
-        }
-
         /* Tela de Execução do Serviço Sim */
         .work-container { max-width: 600px; margin: 40px auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); text-align: center; border-top: 6px solid #3ba526; }
         .sims-progress-bar { width: 100%; background-color: #edf2f7; height: 25px; border-radius: 20px; margin: 25px 0; overflow: hidden; border: 2px solid #cbd5e0; position: relative; }
         .sims-progress-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #52c234, #061700); border-radius: 20px; transition: width 0.1s linear; }
         .status-trabalho { font-style: italic; color: #4a5568; font-size: 16px; margin-top: 10px; min-height: 24px; }
-        
-        /* Formulários (Login / Cadastro) */
-        .auth-container { max-width: 450px; margin: 50px auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center; }
-        .auth-container h2 { text-align: center; margin-bottom: 25px; }
-        .auth-container h2::after { left: 50%; transform: translateX(-50%); }
-        .form-group { text-align: left; margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 6px; font-size: 14px; color: #4a5568; font-weight: 500; }
-        .form-group input { width: 100%; padding: 12px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 15px; }
+
+        /* Estilo do Carrinho */
+        .cart-wrapper { background: white; border-radius: 8px; padding: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .cart-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; text-align: left; }
+        .cart-table th, .cart-table td { padding: 15px; border-bottom: 1px solid #e2e8f0; }
+        .cart-table th { background-color: #f7fafc; color: #4a5568; font-weight: 600; }
+        .cart-total-box { text-align: right; font-size: 20px; font-weight: bold; color: #1a2a3a; margin-top: 20px; padding-top: 25px; border-top: 2px dashed #e2e8f0; }
+        .empty-cart { text-align: center; color: #718096; padding: 40px; font-size: 16px; }
+        .btn-remove { background: none; border: none; color: #e53e3e; cursor: pointer; font-size: 14px; }
+        .btn-remove:hover { text-decoration: underline; }
 
         /* Notificação Pop-up */
-        .toast { position: fixed; bottom: -100px; right: 30px; background: #1a2a3a; color: white; padding: 15px 30px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 12px; z-index: 9999; border-left: 4px solid #3ba526; }
+        .toast { position: fixed; bottom: -100px; right: 30px; background: #1a2a3a; color: white; padding: 15px 30px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 12px; z-index: 9999; border-left: 4px solid #00dbc6; }
         .toast.show { bottom: 30px; }
 
         footer { background-color: #1a2a3a; color: #a0aec0; text-align: center; padding: 25px; margin-top: 60px; font-size: 14px; border-top: 4px solid #00dbc6; }
@@ -86,12 +84,12 @@
 
     <nav>
         <div class="logo" onclick="navigateTo('home')">
-            📦 Mercantis <span class="badge-cloud">AWS Cloud MVP</span>
+            📦 Mercantis <span class="badge-cloud">AWS Cloud Portal</span>
         </div>
         <div class="nav-links">
-            <button id="btn-home" class="active" onclick="navigateTo('home')">Produtos</button>
-            <button id="btn-bicos" onclick="navigateTo('pequenos-servicos')">🟢 Central de Pequenos Serviços</button>
-            <button id="btn-login" onclick="navigateTo('login')">Acessar Conta</button>
+            <button id="btn-home" class="active" onclick="navigateTo('home')">Catálogo</button>
+            <button id="btn-bicos" onclick="navigateTo('bicos')">🟢 Central de Bicos</button>
+            <button id="btn-cart" onclick="navigateTo('cart')">🛒 Meu Carrinho <span id="cart-badge-count" class="cart-count">0</span></button>
         </div>
     </nav>
 
@@ -101,7 +99,7 @@
             <div class="status-banner">
                 <div class="status-info">
                     <h3>🚀 Migração de Arquitetura Alvo ativa</h3>
-                    <p>Aplicações e ambiente frontend operando de forma elástica a partir da instância EC2.</p>
+                    <p>Contrate a infraestrutura ideal ou pacotes gerenciados para o dia-a-dia da Mercantis.</p>
                 </div>
                 <div class="metrics">
                     <div class="metric-box"><div class="metric-val">99.9%</div><div class="metric-lbl">Uptime SLO</div></div>
@@ -109,24 +107,48 @@
                 </div>
             </div>
 
-            <h2>Soluções Corporativas</h2>
-            <div class="vitrine">
+            <h2 style="margin-top: 20px;">🏢 Infraestrutura como Serviço (IaaS)</h2>
+            <p style="color: #666; margin-bottom: 20px; font-size: 14px;">Recursos de computação puros e dimensionáveis direto da AWS.</p>
+            <div class="vitrine" style="margin-bottom: 50px;">
                 <div class="card">
-                    <div class="card-img">🏢<span class="tag-categoria">Corporativo</span></div>
+                    <div class="card-img">🖥️<span class="tag-categoria">IaaS</span></div>
                     <div class="card-body">
-                        <div class="card-title">Infraestrutura como Serviço</div>
-                        <p class="card-text">Soluções completas de computação redimensionável para escalar as operações comerciais.</p>
+                        <div class="card-title">Instância Computacional EC2</div>
+                        <p class="card-text">Servidor virtual elástico de alta performance para hospedar o e-commerce com estabilidade garantida.</p>
                         <div class="card-price"><span>R$</span> 599,00 <span>/mês</span></div>
-                        <button class="btn-action" onclick="triggerToast('🚀 Excelente escolha corporativa! Solução adicionada.')">Contratar Solução</button>
+                        <button class="btn-action" onclick="addToCart('Instância Computacional EC2', 599.00, 'R$')">Adquirir Infraestrutura</button>
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-img">🔒<span class="tag-categoria">Segurança</span></div>
+                    <div class="card-img">💾<span class="tag-categoria">IaaS</span></div>
+                    <div class="card-body">
+                        <div class="card-title">Armazenamento Elástico EBS</div>
+                        <p class="card-text">Disco rígido virtual de alta velocidade e criptografado para persistência segura dos dados da aplicação.</p>
+                        <div class="card-price"><span>R$</span> 149,00 <span>/mês</span></div>
+                        <button class="btn-action" onclick="addToCart('Armazenamento Elástico EBS', 149.00, 'R$')">Adquirir Infraestrutura</button>
+                    </div>
+                </div>
+            </div>
+
+            <h2>📦 Pacotes de Serviços Gerenciados</h2>
+            <p style="color: #666; margin-bottom: 20px; font-size: 14px;">Soluções completas e configuradas prontas para as regras de negócio.</p>
+            <div class="vitrine">
+                <div class="card">
+                    <div class="card-img">🔒<span class="tag-categoria">Serviço</span></div>
                     <div class="card-body">
                         <div class="card-title">Pacote de Segurança Avançada</div>
-                        <p class="card-text">Proteção perimetral com firewalls integrados e regras rígidas de acesso IAM para conformidade.</p>
+                        <p class="card-text">Proteção perimetral completa com firewalls inteligentes integrados e controle rígido de acessos.</p>
                         <div class="card-price"><span>R$</span> 249,00 <span>/mês</span></div>
-                        <button class="btn-action" onclick="triggerToast('🔒 Segurança em primeiro lugar! Módulo ativado.')">Adicionar à Solução</button>
+                        <button class="btn-action" onclick="addToCart('Pacote de Segurança Avançada', 249.00, 'R$')">Adicionar Pacote</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img">📊<span class="tag-categoria">Serviço</span></div>
+                    <div class="card-body">
+                        <div class="card-title">Módulo Analytics & Performance</div>
+                        <p class="card-text">Monitoramento em tempo real com registros automatizados de logs e painéis gerenciais de métricas.</p>
+                        <div class="card-price"><span>R$</span> 389,00 <span>/mês</span></div>
+                        <button class="btn-action" onclick="addToCart('Módulo Analytics & Performance', 389.00, 'R$')">Adicionar Pacote</button>
                     </div>
                 </div>
             </div>
@@ -134,36 +156,34 @@
 
         <div id="page-bicos" class="page">
             <h2 class="sims-headline"><span class="plumbob-icon">💎</span> Quadro de Pequenos Serviços (Bicos)</h2>
-            <p style="margin-bottom: 25px; color: #555;">Escolha um pequeno serviço na nuvem AWS para faturar uns Simoleons extras e ajudar a manter a Mercantis Move2Cloud no ar!</p>
+            <p style="margin-bottom: 25px; color: #555;">Escolha um pequeno bico de TI da Mercantis. Conclua a tarefa para injetar fundos diretamente no orçamento corporativo!</p>
             
             <div class="vitrine">
                 <div class="card" style="border-top: 4px solid #3ba526;">
                     <div class="card-img" style="background: #ebfbee;">💻<span class="tag-categoria" style="background: #3ba526;">Fácil</span></div>
                     <div class="card-body">
                         <div class="card-title">Reiniciar Roteador de Borda</div>
-                        <p class="card-text">A internet do escritório local caiu de novo e o pessoal da Mercantis não consegue acessar o console AWS. Vá lá dar um tapa no aparelho.</p>
+                        <p class="card-text">A conexão local caiu. Vá até a sala de racks dar um reset físico no aparelho para reestabelecer o acesso.</p>
                         <div class="card-price" style="color: #3ba526;">§ 80 <span>Simoleons</span></div>
-                        <button class="btn-action" style="background-color: #3ba526; color: white;" onclick="startSimsJob('Reiniciar Roteador de Borda', 80)">Fazer esse Bico</button>
+                        <button class="btn-action" style="background-color: #3ba526; color: white;" onclick="startSimsJob('Bico: Reiniciar Roteador', 80.00)">Fazer esse Bico</button>
                     </div>
                 </div>
-
                 <div class="card" style="border-top: 4px solid #3ba526;">
                     <div class="card-img" style="background: #ebfbee;">🧹<span class="tag-categoria" style="background: #3ba526;">Médio</span></div>
                     <div class="card-body">
                         <div class="card-title">Limpar Arquivos de Log e Cache</div>
-                        <p class="card-text">O disco rígido da instância EC2 está quase estourando de tanto log inútil acumulado. Delete tudo antes que cause um erro 502!</p>
+                        <p class="card-text">O disco rígido da instância está enchendo. Execute uma limpeza geral de temporários antes do travamento.</p>
                         <div class="card-price" style="color: #3ba526;">§ 150 <span>Simoleons</span></div>
-                        <button class="btn-action" style="background-color: #3ba526; color: white;" onclick="startSimsJob('Limpar Arquivos de Log e Cache', 150)">Fazer esse Bico</button>
+                        <button class="btn-action" style="background-color: #3ba526; color: white;" onclick="startSimsJob('Bico: Limpeza de Cache', 150.00)">Fazer esse Bico</button>
                     </div>
                 </div>
-
                 <div class="card" style="border-top: 4px solid #3ba526;">
                     <div class="card-img" style="background: #ebfbee;">☕<span class="tag-categoria" style="background: #3ba526;">Urgente</span></div>
                     <div class="card-body">
                         <div class="card-title">Abastecer Café dos Devs</div>
-                        <p class="card-text">O Enzo e o time de desenvolvimento estão há 14 horas acordados programando o banco de dados. Leve café forte imediatamente!</p>
+                        <p class="card-text">O Enzo e o time de infraestrutura estão há horas focados configurando os servidores AWS. Leve café urgente!</p>
                         <div class="card-price" style="color: #3ba526;">§ 300 <span>Simoleons</span></div>
-                        <button class="btn-action" style="background-color: #3ba526; color: white;" onclick="startSimsJob('Abastecer Café dos Devs', 300)">Fazer esse Bico</button>
+                        <button class="btn-action" style="background-color: #3ba526; color: white;" onclick="startSimsJob('Bico: Abastecer Café dos Devs', 300.00)">Fazer esse Bico</button>
                     </div>
                 </div>
             </div>
@@ -173,32 +193,27 @@
             <div class="work-container">
                 <div class="plumbob-icon" style="font-size: 45px;">💎</div>
                 <h2 id="job-title" style="margin: 15px 0; border: none;">Realizando Serviço...</h2>
-                <p style="color: #718096;">Seu Sim está focado trabalhando duro no ambiente de TI da Mercantis.</p>
-                
-                <div class="sims-progress-bar">
-                    <div id="progress-fill" class="sims-progress-fill"></div>
-                </div>
-                
-                <div id="job-status-text" class="status-trabalho">Removendo poeira dos cabos...</div>
+                <p style="color: #718096;">Seu Sim está focado trabalhando no ecossistema da Mercantis.</p>
+                <div class="sims-progress-bar"><div id="progress-fill" class="sims-progress-fill"></div></div>
+                <div id="job-status-text" class="status-trabalho">Iniciando as conexões...</div>
             </div>
         </div>
 
-        <div id="page-login" class="page">
-            <div class="auth-container">
-                <h2>Acessar o Portal</h2>
-                <form onsubmit="handleAuth(event, 'Bem-vindo de volta! Carregando seu ambiente na nuvem...')">
-                    <div class="form-group"><label>E-mail Corporativo</label><input type="email" placeholder="seu.nome@mercantis.com" required></div>
-                    <div class="form-group"><label>Senha de Acesso</label><input type="password" placeholder="••••••••" required></div>
-                    <button type="submit" class="btn-action">Entrar no Sistema</button>
-                </form>
+        <div id="page-cart" class="page">
+            <h2>🛒 Recursos e Serviços Selecionados</h2>
+            <p style="color: #666; margin-bottom: 25px; font-size: 14px;">Gerencie os componentes que farão parte do escopo final da sua migração.</p>
+            
+            <div class="cart-wrapper">
+                <div id="cart-content">
+                    </div>
             </div>
         </div>
 
     </div>
 
     <div id="toast-notification" class="toast">
-        <span id="toast-icon">🟢</span>
-        <span id="toast-message">Mensagem aqui!</span>
+        <span id="toast-icon">🚀</span>
+        <span id="toast-message">Mensagem</span>
     </div>
 
     <footer>
@@ -207,6 +222,9 @@
     </footer>
 
     <script>
+        // Banco de Dados local simulado para persistência do Carrinho
+        let cart = [];
+
         function navigateTo(pageId) {
             document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
             document.querySelectorAll('.nav-links button').forEach(btn => btn.classList.remove('active'));
@@ -216,25 +234,105 @@
 
             if (pageId === 'home') document.getElementById('btn-home').classList.add('active');
             else if (pageId === 'bicos') document.getElementById('btn-bicos').classList.add('active');
-            else if (pageId === 'login') document.getElementById('btn-login').classList.add('active');
-            
+            else if (pageId === 'cart') {
+                document.getElementById('btn-cart').classList.add('active');
+                renderCart();
+            }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function triggerToast(message) {
+        function triggerToast(message, icon = '🚀') {
             const toast = document.getElementById('toast-notification');
+            document.getElementById('toast-icon').innerText = icon;
             document.getElementById('toast-message').innerText = message;
             toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 4000);
+            setTimeout(() => toast.classList.remove('show'), 3500);
         }
 
-        function handleAuth(event, successMessage) {
-            event.preventDefault();
-            triggerToast(successMessage);
-            setTimeout(() => navigateTo('home'), 1500);
+        // Adicionar itens ao carrinho
+        function addToCart(name, price, type) {
+            // Verifica se o item já está no carrinho
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.qty += 1;
+            } else {
+                cart.push({ name, price, type, qty: 1 });
+            }
+            updateCartBadge();
+            triggerToast(`Adicionado com sucesso: ${name}`, '🛒');
         }
 
-        // Sistema Emocional de Bicos do The Sims
+        function updateCartBadge() {
+            const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
+            document.getElementById('cart-badge-count').innerText = totalItems;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartBadge();
+            renderCart();
+            triggerToast('Item removido do escopo.', '🗑️');
+        }
+
+        // Renderizar dinamicamente a tabela do carrinho
+        function renderCart() {
+            const container = document.getElementById('cart-content');
+            if (cart.length === 0) {
+                container.innerHTML = `<div class="empty-cart">Nenhum componente ou bico selecionado ainda. Explore as abas de Catálogo ou Central de Bicos!</div>`;
+                return;
+            }
+
+            let html = `
+                <table class="cart-table">
+                    <thead>
+                        <tr>
+                            <th>Componente / Serviço</th>
+                            <th>Tipo de Moeda</th>
+                            <th>Quantidade</th>
+                            <th>Preço Unitário</th>
+                            <th>Subtotal</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            let totalBRL = 0;
+            let totalSims = 0;
+
+            cart.forEach((item, index) => {
+                const subtotal = item.price * item.qty;
+                if (item.type === 'R$') totalBRL += subtotal;
+                else totalSims += subtotal;
+
+                html += `
+                    <tr>
+                        <td><strong>${item.name}</strong></td>
+                        <td>${item.type === 'R$' ? 'Real Comercial (Investimento)' : 'Simoleons (Fundo de Bicos)'}</td>
+                        <td>${item.qty}</td>
+                        <td>${item.type} ${item.price.toFixed(2)}</td>
+                        <td><strong>${item.type} ${subtotal.toFixed(2)}</strong></td>
+                        <td><button class="btn-remove" onclick="removeFromCart(${index})">Remover</button></td>
+                    </tr>
+                `;
+            });
+
+            html += `</tbody></table>`;
+            
+            // Caixa de totais dividida inteligentemente por moedas
+            html += `<div class="cart-total-box">`;
+            if (totalBRL > 0) {
+                html += `<div>Custo de Infraestrutura/Serviços: <span style="color:#007bff">R$ ${totalBRL.toFixed(2)}</span></div>`;
+            }
+            if (totalSims > 0) {
+                html += `<div style="margin-top: 5px;">Fundos de Bicos Gerados: <span style="color:#28a745">§ ${totalSims.toFixed(2)} Simoleons</span></div>`;
+            }
+            html += `</div>`;
+
+            container.innerHTML = html;
+        }
+
+        // Sistema Animado de Bicos do The Sims Mode
         function startSimsJob(title, pay) {
             document.getElementById('job-title').innerText = title;
             navigateTo('trabalhando');
@@ -244,19 +342,18 @@
             progressFill.style.width = '0%';
             
             const frasesSims = [
-                "Sul Sul! Iniciando os preparativos...",
-                "Digitando comandos aleatórios no terminal da AWS...",
-                "Discutindo a arquitetura em Simlish (Reticula!)...",
-                "Tomando um susto com um bug inesperado...",
-                "Quase pronto, organizando os dados finais..."
+                "Sul Sul! Iniciando as conexões de rede...",
+                "Rodando rotinas elásticas de teste no console AWS...",
+                "Discutindo a migração em Simlish com o time...",
+                "Sincronizando tabelas corporativas na nuvem...",
+                "Finalizando bico e emitindo nota de Simoleons..."
             ];
 
             let progress = 0;
             const interval = setInterval(() => {
-                progress += 2;
+                progress += 4;
                 progressFill.style.width = progress + '%';
                 
-                // Muda a frase de status aleatoriamente
                 if (progress % 20 === 0) {
                     const randomFrase = frasesSims[Math.floor(Math.random() * frasesSims.length)];
                     statusText.innerText = randomFrase;
@@ -264,10 +361,12 @@
 
                 if (progress >= 100) {
                     clearInterval(interval);
-                    triggerToast(`💰 Dag Dag! Serviço concluído! Você faturou § ${pay} Simoleons.`);
-                    setTimeout(() => navigateTo('bicos'), 1500);
+                    // Adiciona o bico ganho diretamente ao carrinho como saldo
+                    addToCart(title, pay, '§');
+                    triggerToast(`Dag Dag! Bico concluído. Saldo de § ${pay} enviado ao seu carrinho!`, '💎');
+                    setTimeout(() => navigateTo('cart'), 1200);
                 }
-            }, 100); // 5 segundos de execução
+            }, 150);
         }
     </script>
 </body>
