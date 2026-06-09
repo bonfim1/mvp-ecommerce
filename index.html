@@ -3,19 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mercantis - Painel MVP & E-Commerce</title>
+    <title>Mercantis - Portal Move2Cloud</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #f4f6f9; color: #333; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; transition: all 0.3s ease; }
+        body { background-color: #f4f6f9; color: #333; overflow-x: hidden; }
         
         /* Navbar */
         nav { background-color: #1a2a3a; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .logo { font-size: 22px; font-weight: bold; color: #00dbc6; display: flex; align-items: center; gap: 8px; }
+        .logo { font-size: 22px; font-weight: bold; color: #00dbc6; display: flex; align-items: center; gap: 8px; cursor: pointer; }
         .badge-cloud { background: #007bff; color: white; font-size: 11px; padding: 3px 8px; border-radius: 12px; font-weight: normal; }
+        .nav-links button { background: none; border: none; color: #a0aec0; margin-left: 20px; cursor: pointer; font-size: 15px; font-weight: 500; }
+        .nav-links button:hover, .nav-links button.active { color: #00dbc6; }
         
-        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; min-height: 70vh; }
         
-        /* Banner de Status Cloud - Alinhado ao Roteiro */
+        /* Páginas (Escondidas por padrão, exceto a ativa) */
+        .page { display: none; opacity: 0; transform: translateY(20px); }
+        .page.active { display: block; opacity: 1; transform: translateY(0); }
+
+        /* Banner de Status Cloud */
         .status-banner { background: white; border-left: 5px solid #00dbc6; padding: 20px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
         .status-info h3 { margin-bottom: 5px; color: #1a2a3a; }
         .status-info p { color: #666; font-size: 14px; }
@@ -29,10 +35,10 @@
         h2::after { content: ''; width: 50px; height: 3px; background: #00dbc6; position: absolute; bottom: 0; left: 0; }
         
         .vitrine { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        .card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; }
+        .card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
         .card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
         
-        .card-img { height: 200px; background: #eaedf2; display: flex; align-items: center; justify-content: center; font-size: 50px; color: #a0aec0; position: relative; }
+        .card-img { height: 180px; background: #eaedf2; display: flex; align-items: center; justify-content: center; font-size: 50px; color: #a0aec0; position: relative; }
         .tag-categoria { position: absolute; top: 10px; left: 10px; background: rgba(26, 42, 58, 0.85); color: white; font-size: 11px; padding: 4px 8px; border-radius: 4px; text-transform: uppercase; font-weight: bold; }
         
         .card-body { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
@@ -41,8 +47,24 @@
         .card-price { font-size: 22px; font-weight: bold; color: #1a2a3a; margin-top: auto; margin-bottom: 15px; display: flex; align-items: baseline; gap: 4px; }
         .card-price span { font-size: 14px; font-weight: normal; color: #888; }
         
-        .btn-action { background-color: #00dbc6; color: #1a2a3a; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: background 0.2s; width: 100%; text-align: center; text-decoration: none; font-size: 15px; }
-        .btn-action:hover { background-color: #00bfae; }
+        .btn-action { background-color: #00dbc6; color: #1a2a3a; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px; width: 100%; text-align: center; }
+        .btn-action:hover { background-color: #00bfae; transform: scale(1.02); }
+
+        /* Formulários (Login / Cadastro) */
+        .auth-container { max-width: 450px; margin: 50px auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center; }
+        .auth-container h2 { text-align: center; margin-bottom: 25px; }
+        .auth-container h2::after { left: 50%; transform: translateX(-50%); }
+        .form-group { text-align: left; margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 6px; font-size: 14px; color: #4a5568; font-weight: 500; }
+        .form-group input { width: 100%; padding: 12px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 15px; }
+        .form-group input:focus { border-color: #00dbc6; outline: none; box-shadow: 0 0 0 3px rgba(0,219,198,0.1); }
+        .auth-switch { margin-top: 20px; font-size: 14px; color: #718096; }
+        .auth-switch span { color: #007bff; cursor: pointer; font-weight: 500; }
+        .auth-switch span:hover { text-decoration: underline; }
+
+        /* Notificação Emocional Pop-up */
+        .toast { position: fixed; bottom: -100px; right: 30px; background: #1a2a3a; color: white; padding: 15px 30px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 12px; z-index: 9999; border-left: 4px solid #28a745; }
+        .toast.show { bottom: 30px; }
 
         footer { background-color: #1a2a3a; color: #a0aec0; text-align: center; padding: 25px; margin-top: 60px; font-size: 14px; border-top: 4px solid #00dbc6; }
         footer strong { color: white; }
@@ -51,74 +73,118 @@
 <body>
 
     <nav>
-        <div class="logo">
-            📦 Mercantis <span class="badge-cloud">Ambiente AWS Cloud</span>
+        <div class="logo" onclick="navigateTo('home')">
+            📦 Mercantis <span class="badge-cloud">AWS Cloud MVP</span>
         </div>
-        <div style="font-size: 14px; color: #a0aec0;">MVP de Infraestrutura e Negócios</div>
+        <div class="nav-links">
+            <button id="btn-home" class="active" onclick="navigateTo('home')">Produtos</button>
+            <button id="btn-login" onclick="navigateTo('login')">Acessar Conta</button>
+        </div>
     </nav>
 
     <div class="container">
         
-        <div class="status-banner">
-            <div class="status-info">
-                <h3>🚀 Migração de Arquitetura Alvo ativa</h3>
-                <p>Aplicações e frontend operando de forma elástica a partir da instância EC2 pública.</p>
-            </div>
-            <div class="metrics">
-                <div class="metric-box">
-                    <div class="metric-val">99.9%</div>
-                    <div class="metric-lbl">Uptime SLO</div>
+        <div id="page-home" class="page active">
+            <div class="status-banner">
+                <div class="status-info">
+                    <h3>🚀 Migração de Arquitetura Alvo ativa</h3>
+                    <p>Aplicações e ambiente frontend operando de forma elástica a partir da instância EC2.</p>
                 </div>
-                <div class="metric-box">
-                    <div class="metric-val">&lt; 300ms</div>
-                    <div class="metric-lbl">Latência</div>
+                <div class="metrics">
+                    <div class="metric-box">
+                        <div class="metric-val">99.9%</div>
+                        <div class="metric-lbl">Uptime SLO</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-val">&lt; 300ms</div>
+                        <div class="metric-lbl">Latência</div>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Soluções Disponíveis</h2>
+            <div class="vitrine">
+                <div class="card">
+                    <div class="card-img">🏢<span class="tag-categoria">Corporativo</span></div>
+                    <div class="card-body">
+                        <div class="card-title">Infraestrutura como Serviço</div>
+                        <p class="card-text">Soluções completas de computação redimensionável para escalar as operações comerciais.</p>
+                        <div class="card-price"><span>R$</span> 599,00 <span>/mês</span></div>
+                        <button class="btn-action" onclick="triggerToast('🚀 Excelente escolha! Solução adicionada ao escopo da migração.')">Contratar Solução</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-img">🔒<span class="tag-categoria">Segurança</span></div>
+                    <div class="card-body">
+                        <div class="card-title">Pacote de Segurança Avançada</div>
+                        <p class="card-text">Proteção perimetral com firewalls integrados e regras rígidas de acesso IAM para conformidade.</p>
+                        <div class="card-price"><span>R$</span> 249,00 <span>/mês</span></div>
+                        <button class="btn-action" onclick="triggerToast('🔒 Segurança em primeiro lugar! Módulo ativado com sucesso.')">Adicionar à Solução</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-img">📊<span class="tag-categoria">Análise</span></div>
+                    <div class="card-body">
+                        <div class="card-title">Módulo Analytics & Performance</div>
+                        <p class="card-text">Monitoramento em tempo real com registros de logs estruturados e métricas de negócio na nuvem.</p>
+                        <div class="card-price"><span>R$</span> 389,00 <span>/mês</span></div>
+                        <button class="btn-action" onclick="triggerToast('📊 Insights poderosos aguardam você! Módulo adicionado.')">Adicionar à Solução</button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <h2>Produtos em Destaque</h2>
-        
-        <div class="vitrine">
-            <div class="card">
-                <div class="card-img">
-                    🏢
-                    <span class="tag-categoria">Corporativo</span>
-                </div>
-                <div class="card-body">
-                    <div class="card-title">Infraestrutura como Serviço</div>
-                    <p class="card-text">Soluções completas de computação redimensionável para escalar as operações comerciais da sua empresa.</p>
-                    <div class="card-price"><span>R$</span> 599,00 <span>/mês</span></div>
-                    <button class="btn-action" onclick="alert('Item adicionado ao carrinho simulado!')">Contratar Solução</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-img">
-                    🔒
-                    <span class="tag-categoria">Segurança</span>
-                </div>
-                <div class="card-body">
-                    <div class="card-title">Pacote de Segurança Avançada</div>
-                    <p class="card-text">Proteção perimetral com firewalls integrados e gerenciamento rígido de permissões para dados em repouso.</p>
-                    <div class="card-price"><span>R$</span> 249,00 <span>/mês</span></div>
-                    <button class="btn-action" onclick="alert('Item adicionado ao carrinho simulado!')">Adicionar à Solução</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-img">
-                    📊
-                    <span class="tag-categoria">Análise</span>
-                </div>
-                <div class="card-body">
-                    <div class="card-title">Módulo Analytics & Performance</div>
-                    <p class="card-text">Monitoramento em tempo real com registros de logs e painéis de desempenho corporativo integrados.</p>
-                    <div class="card-price"><span>R$</span> 389,00 <span>/mês</span></div>
-                    <button class="btn-action" onclick="alert('Item adicionado ao carrinho simulado!')">Adicionar à Solução</button>
+        <div id="page-login" class="page">
+            <div class="auth-container">
+                <h2>Acessar o Portal</h2>
+                <form onsubmit="handleAuth(event, 'Bem-vindo de volta! Carregando seu ambiente na nuvem...')">
+                    <div class="form-group">
+                        <label>E-mail Corporativo</label>
+                        <input type="email" placeholder="seu.nome@mercantis.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Senha de Acesso</label>
+                        <input type="password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn-action">Entrar no Sistema</button>
+                </form>
+                <div class="auth-switch">
+                    Novo na Mercantis? <span onclick="navigateTo('cadastro')">Crie sua conta corporativa</span>
                 </div>
             </div>
         </div>
 
+        <div id="page-cadastro" class="page">
+            <div class="auth-container">
+                <h2>Criar Conta</h2>
+                <form onsubmit="handleAuth(event, '✨ Conta criada! Bem-vindo à nova era da Mercantis na nuvem.')">
+                    <div class="form-group">
+                        <label>Nome Completo</label>
+                        <input type="text" placeholder="Seu Nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label>E-mail Corporativo</label>
+                        <input type="email" placeholder="seu.nome@mercantis.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Senha Segura</label>
+                        <input type="password" placeholder="Mínimo 8 caracteres" required>
+                    </div>
+                    <button type="submit" class="btn-action">Finalizar Cadastro</button>
+                </form>
+                <div class="auth-switch">
+                    Já possui acesso? <span onclick="navigateTo('login')">Fazer Login</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="toast-notification" class="toast">
+        <span id="toast-icon">✅</span>
+        <span id="toast-message">Mensagem de feedback aqui!</span>
     </div>
 
     <footer>
@@ -126,5 +192,52 @@
         <p style="font-size: 12px; margin-top: 5px; color: #718096;">Desenvolvido por Luzivania & Enzo | ESPM Sistemas de Informação e Negócios</p>
     </footer>
 
+    <script>
+        function navigateTo(pageId) {
+            // Esconde todas as páginas e remove a animação
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-links button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Mostra a página escolhida com efeito suave
+            const activePage = document.getElementById('page-' + pageId);
+            if (activePage) {
+                activePage.classList.add('active');
+            }
+
+            // Destaca o botão correto na navbar
+            if (pageId === 'home') {
+                document.getElementById('btn-home').classList.add('active');
+            } else if (pageId === 'login' || pageId === 'cadastro') {
+                document.getElementById('btn-login').classList.add('active');
+            }
+            
+            // Rola para o topo automaticamente
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function triggerToast(message) {
+            const toast = document.getElementById('toast-notification');
+            document.getElementById('toast-message').innerText = message;
+            
+            toast.classList.add('show');
+            
+            // Oculta a notificação após 4 segundos
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        function handleAuth(event, successMessage) {
+            event.preventDefault(); // Impede a página de recarregar
+            triggerToast(successMessage);
+            setTimeout(() => {
+                navigateTo('home'); // Redireciona de volta para a Home após o login/cadastro
+            }, 1500);
+        }
+    </script>
 </body>
 </html>
