@@ -57,11 +57,17 @@
         .plumbob-icon { font-size: 24px; animation: float 2s ease-in-out infinite; display: inline-block; }
         @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
         
-        /* Tela de Execução do Serviço Sim */
+        /* Tela de Trabalho Sim */
         .work-container { max-width: 600px; margin: 40px auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); text-align: center; border-top: 6px solid #3ba526; }
         .sims-progress-bar { width: 100%; background-color: #edf2f7; height: 25px; border-radius: 20px; margin: 25px 0; overflow: hidden; border: 2px solid #cbd5e0; position: relative; }
         .sims-progress-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #52c234, #061700); border-radius: 20px; transition: width 0.1s linear; }
         .status-trabalho { font-style: italic; color: #4a5568; font-size: 16px; margin-top: 10px; min-height: 24px; }
+
+        /* Painel / Dashboard de Quantidades do Banco */
+        .db-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .db-card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-top: 4px solid #007bff; text-align: center; }
+        .db-num { font-size: 36px; font-weight: bold; color: #1a2a3a; margin: 10px 0; }
+        .db-meta { font-size: 12px; color: #718096; }
 
         /* Estilo do Carrinho */
         .cart-wrapper { background: white; border-radius: 8px; padding: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
@@ -80,10 +86,8 @@
         .form-group { text-align: left; margin-bottom: 20px; }
         .form-group label { display: block; margin-bottom: 6px; font-size: 14px; color: #4a5568; font-weight: 500; }
         .form-group input { width: 100%; padding: 12px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 15px; }
-        .form-group input:focus { border-color: #00dbc6; outline: none; box-shadow: 0 0 0 3px rgba(0,219,198,0.1); }
         .auth-switch { margin-top: 20px; font-size: 14px; color: #718096; }
         .auth-switch span { color: #007bff; cursor: pointer; font-weight: 500; }
-        .auth-switch span:hover { text-decoration: underline; }
 
         /* Notificação Pop-up */
         .toast { position: fixed; bottom: -100px; right: 30px; background: #1a2a3a; color: white; padding: 15px 30px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 12px; z-index: 9999; border-left: 4px solid #00dbc6; }
@@ -94,7 +98,6 @@
 </head>
 <body>
 
-    <!-- Navbar -->
     <nav>
         <div class="logo" onclick="navigateTo('home')">
             📦 Mercantis <span class="badge-cloud">AWS Cloud Portal</span>
@@ -102,6 +105,7 @@
         <div class="nav-links">
             <button id="btn-home" class="active" onclick="navigateTo('home')">Catálogo</button>
             <button id="btn-bicos" onclick="navigateTo('bicos')">🟢 Pequenos Serviços</button>
+            <button id="btn-db" onclick="navigateTo('db')">📊 Dados do Banco (RDS)</button>
             <button id="btn-cart" onclick="navigateTo('cart')">🛒 Meu Carrinho <span id="cart-badge-count" class="cart-count">0</span></button>
             <button id="btn-login" onclick="navigateTo('login')">Acessar Conta</button>
         </div>
@@ -109,28 +113,31 @@
 
     <div class="container">
         
-        <!-- PÁGINA 1: HOME / CATÁLOGO DIVIDIDO -->
         <div id="page-home" class="page active">
             <div class="status-banner">
                 <div class="status-info">
                     <h3>🚀 Migração de Arquitetura Alvo ativa</h3>
-                    <p>Contrate a infraestrutura ideal ou pacotes gerenciados para o dia-a-dia da Mercantis.</p>
+                    <p>Contrate a infraestrutura ideal ou pacotes gerenciados para o dia-a-dia da Mercantis[cite: 3].</p>
                 </div>
                 <div class="metrics">
-                    <div class="metric-box"><div class="metric-val">99.9%</div><div class="metric-lbl">Uptime SLO</div></div>
-                    <div class="metric-box"><div class="metric-val">&lt; 300ms</div><div class="metric-lbl">Latência</div></div>
+                    <div class="metric-box"><div class="metric-val">99.9%</div><div class="metric-lbl">Uptime [cite: 3]</div></div>
+                    <div class="metric-box"><div class="metric-val">&lt; 300ms</div><div class="metric-lbl">Latência [cite: 3]</div></div>
                 </div>
             </div>
 
-            <!-- Seção 1: Infraestrutura como Serviço (IaaS) -->
-            <h2 style="margin-top: 20px;">🏢 Infraestrutura como Serviço (IaaS)</h2>
-            <p style="color: #666; margin-bottom: 20px; font-size: 14px;">Recursos de computação puros e dimensionáveis direto da AWS.</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>🏢 Infraestrutura como Serviço (IaaS) [cite: 5]</h2>
+                <button class="btn-action" style="background-color: #007bff; color: white; max-width: 250px; font-size: 12px; padding: 8px;" onclick="testarConexaoRDS()">
+                    🔄 Validar Conexão p/ mercantis-db
+                </button>
+            </div>
+            
             <div class="vitrine" style="margin-bottom: 50px;">
                 <div class="card">
                     <div class="card-img">🖥️<span class="tag-categoria">IaaS</span></div>
                     <div class="card-body">
                         <div class="card-title">Instância Computacional EC2</div>
-                        <p class="card-text">Servidor virtual elástico de alta performance para hospedar o e-commerce com estabilidade garantida.</p>
+                        <p class="card-text">Servidor virtual elástico de alta performance para hospedar o e-commerce[cite: 6].</p>
                         <div class="card-price"><span>R$</span> 599,00 <span>/mês</span></div>
                         <button class="btn-action" onclick="addToCart('Instância Computacional EC2', 599.00, 'R$')">Adquirir Infraestrutura</button>
                     </div>
@@ -139,67 +146,46 @@
                     <div class="card-img">💾<span class="tag-categoria">IaaS</span></div>
                     <div class="card-body">
                         <div class="card-title">Armazenamento Elástico EBS</div>
-                        <p class="card-text">Disco rígido virtual de alta velocidade e criptografado para persistência segura dos dados da aplicação.</p>
+                        <p class="card-text">Disco rígido virtual criptografado para persistência segura dos dados[cite: 9].</p>
                         <div class="card-price"><span>R$</span> 149,00 <span>/mês</span></div>
                         <button class="btn-action" onclick="addToCart('Armazenamento Elástico EBS', 149.00, 'R$')">Adquirir Infraestrutura</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Seção 2: Pacotes de Serviços -->
-            <h2>📦 Pacotes de Serviços Gerenciados</h2>
-            <p style="color: #666; margin-bottom: 20px; font-size: 14px;">Soluções completas e configuradas prontas para as regras de negócio.</p>
+            <h2>📦 Pacotes de Serviços Gerenciados [cite: 5]</h2>
             <div class="vitrine">
                 <div class="card">
                     <div class="card-img">🔒<span class="tag-categoria">Serviço</span></div>
                     <div class="card-body">
                         <div class="card-title">Pacote de Segurança Avançada</div>
-                        <p class="card-text">Proteção perimetral completa com firewalls inteligentes integrados e controle rígido de acessos.</p>
+                        <p class="card-text">Proteção perimetral com firewalls inteligentes e regras rígidas IAM[cite: 9, 11].</p>
                         <div class="card-price"><span>R$</span> 249,00 <span>/mês</span></div>
                         <button class="btn-action" onclick="addToCart('Pacote de Segurança Avançada', 249.00, 'R$')">Adicionar Pacote</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-img">📊<span class="tag-categoria">Serviço</span></div>
-                    <div class="card-body">
-                        <div class="card-title">Módulo Analytics & Performance</div>
-                        <p class="card-text">Monitoramento em tempo real com registros automatizados de logs e painéis gerenciais de métricas.</p>
-                        <div class="card-price"><span>R$</span> 389,00 <span>/mês</span></div>
-                        <button class="btn-action" onclick="addToCart('Módulo Analytics & Performance', 389.00, 'R$')">Adicionar Pacote</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- PÁGINA 2: PEQUENOS SERVIÇOS (CENTRAL DE BICOS) -->
         <div id="page-bicos" class="page">
             <h2 class="sims-headline"><span class="plumbob-icon">💎</span> Central de Bicos</h2>
-            <p style="margin-bottom: 25px; color: #555;">Escolha um pequeno bico de TI da Mercantis. Conclua a tarefa para injetar fundos diretamente no orçamento corporativo!</p>
+            <p style="margin-bottom: 25px; color: #555;">Execute bicos para registrar transações de infraestrutura diretamente na tabela de histórico do banco!</p>
             
             <div class="vitrine">
                 <div class="card" style="border-top: 4px solid #3ba526;">
                     <div class="card-img" style="background: #ebfbee;">💻<span class="tag-categoria" style="background: #3ba526;">Fácil</span></div>
                     <div class="card-body">
                         <div class="card-title">Reiniciar Roteador de Borda</div>
-                        <p class="card-text">A conexão local caiu. Vá até a sala de racks dar um reset físico no aparelho para reestabelecer o acesso.</p>
+                        <p class="card-text">A conexão local caiu. Dê um reset físico para reestabelecer o acesso ao console AWS.</p>
                         <div class="card-price" style="color: #3ba526;">§ 80 <span>Simoleons</span></div>
                         <button class="btn-action" style="background-color: #3ba526; color: white;" onclick="startSimsJob('Bico: Reiniciar Roteador', 80.00)">Fazer esse Bico</button>
-                    </div>
-                </div>
-                <div class="card" style="border-top: 4px solid #3ba526;">
-                    <div class="card-img" style="background: #ebfbee;">🧹<span class="tag-categoria" style="background: #3ba526;">Médio</span></div>
-                    <div class="card-body">
-                        <div class="card-title">Limpar Arquivos de Log e Cache</div>
-                        <p class="card-text">O disco rígido da instância está enchendo. Execute uma limpeza geral de temporários antes do travamento.</p>
-                        <div class="card-price" style="color: #3ba526;">§ 150 <span>Simoleons</span></div>
-                        <button class="btn-action" style="background-color: #3ba526; color: white;" onclick="startSimsJob('Bico: Limpeza de Cache', 150.00)">Fazer esse Bico</button>
                     </div>
                 </div>
                 <div class="card" style="border-top: 4px solid #3ba526;">
                     <div class="card-img" style="background: #ebfbee;">☕<span class="tag-categoria" style="background: #3ba526;">Urgente</span></div>
                     <div class="card-body">
                         <div class="card-title">Abastecer Café dos Devs</div>
-                        <p class="card-text">O Enzo e o time de infraestrutura estão há horas focados configurando os servidores AWS. Leve café urgente!</p>
+                        <p class="card-text">O Enzo e o time estão há horas focados configurando as regras do RDS[cite: 9]. Leve café urgente!</p>
                         <div class="card-price" style="color: #3ba526;">§ 300 <span>Simoleons</span></div>
                         <button class="btn-action" style="background-color: #3ba526; color: white;" onclick="startSimsJob('Bico: Abastecer Café dos Devs', 300.00)">Fazer esse Bico</button>
                     </div>
@@ -207,87 +193,93 @@
             </div>
         </div>
 
-        <!-- PÁGINA 3: ANIMADO TRABALHANDO NO BICO -->
+        <div id="page-db" class="page">
+            <h2>📊 Painel de Quantidades das Tabelas (AWS RDS)</h2>
+            <p style="color: #666; margin-bottom: 25px; font-size: 14px;">Esses indicadores simulam uma consulta SQL `SELECT COUNT(*)` dinâmica refletindo as alterações das tabelas em tempo real.</p>
+            
+            <div class="db-grid">
+                <div class="db-card">
+                    <div class="db-meta">TABELA: `tb_usuarios`</div>
+                    <div id="db-user-count" class="db-num">1</div>
+                    <div style="color:#007bff; font-weight:500; font-size:14px;">Administradores Logados</div>
+                </div>
+                <div class="db-card" style="border-top-color: #00dbc6;">
+                    <div class="db-meta">TABELA: `tb_infra_produtos`</div>
+                    <div id="db-prod-count" class="db-num">0</div>
+                    <div style="color:#00dbc6; font-weight:500; font-size:14px;">Itens IaaS Alocados [cite: 5]</div>
+                </div>
+                <div class="db-card" style="border-top-color: #28a745;">
+                    <div class="db-meta">TABELA: `tb_bicos_historico`</div>
+                    <div id="db-job-count" class="db-num">0</div>
+                    <div style="color:#28a745; font-weight:500; font-size:14px;">Serviços Concluídos (Sims)</div>
+                </div>
+            </div>
+
+            <div class="cart-wrapper" style="border-left: 4px solid #007bff; background: #f8fafc;">
+                <h4 style="color:#1a2a3a; margin-bottom: 8px;">Informações do Cluster Ativo:</h4>
+                <p style="font-size:13px; font-family:Courier, monospace; color:#4a5568;">
+                    <strong>Endpoint:</strong> mercantis-db.c3eyw6yqxxxx.sa-east-1.rds.amazonaws.com:3306<br>
+                    <strong>Engine:</strong> MariaDB Community Server v10.11<br>
+                    <strong>Status da Conexão:</strong> <span style="color:#28a745; font-weight:bold;">🟢 ACTIVE / SECURE (SSL/TLS)</span> [cite: 11, 19]
+                </p>
+            </div>
+        </div>
+
         <div id="page-trabalhando" class="page">
             <div class="work-container">
                 <div class="plumbob-icon" style="font-size: 45px;">💎</div>
                 <h2 id="job-title" style="margin: 15px 0; border: none;">Realizando Serviço...</h2>
-                <p style="color: #718096;">Seu Sim está focado trabalhando no ecossistema da Mercantis.</p>
                 <div class="sims-progress-bar"><div id="progress-fill" class="sims-progress-fill"></div></div>
                 <div id="job-status-text" class="status-trabalho">Iniciando as conexões...</div>
             </div>
         </div>
 
-        <!-- PÁGINA 4: O CARRINHO DE COMPRAS SELECIONADO -->
         <div id="page-cart" class="page">
             <h2>🛒 Recursos e Serviços Selecionados</h2>
-            <p style="color: #666; margin-bottom: 25px; font-size: 14px;">Gerencie os componentes que farão parte do escopo final da sua migração.</p>
-            <div class="cart-wrapper">
-                <div id="cart-content"></div>
-            </div>
+            <div class="cart-wrapper"><div id="cart-content"></div></div>
         </div>
 
-        <!-- PÁGINA 5: LOGIN -->
         <div id="page-login" class="page">
             <div class="auth-wrapper">
                 <h2>Acessar o Portal</h2>
-                <form onsubmit="handleAuth(event, 'Bem-vindo de volta! Carregando seu ambiente na nuvem...')">
-                    <div class="form-group">
-                        <label>E-mail Corporativo</label>
-                        <input type="email" placeholder="seu.nome@mercantis.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Senha de Acesso</label>
-                        <input type="password" placeholder="••••••••" required>
-                    </div>
+                <form onsubmit="handleAuth(event, 'Conexão autorizada na tabela `tb_usuarios`!', true)">
+                    <div class="form-group"><label>E-mail Corporativo</label><input type="email" placeholder="luzivania.bonfim@mercantis.com" required></div>
+                    <div class="form-group"><label>Senha de Acesso</label><input type="password" placeholder="••••••••" required></div>
                     <button type="submit" class="btn-action">Entrar no Sistema</button>
                 </form>
-                <div class="auth-switch">
-                    Novo na Mercantis? <span onclick="navigateTo('cadastro')">Crie sua conta corporativa</span>
-                </div>
+                <div class="auth-switch">Novo na Mercantis? <span onclick="navigateTo('cadastro')">Crie sua conta corporativa</span></div>
             </div>
         </div>
 
-        <!-- PÁGINA 6: CADASTRO -->
         <div id="page-cadastro" class="page">
             <div class="auth-wrapper">
                 <h2>Criar Conta</h2>
-                <form onsubmit="handleAuth(event, '✨ Conta criada! Bem-vindo à nova era da Mercantis na nuvem.')">
-                    <div class="form-group">
-                        <label>Nome Completo</label>
-                        <input type="text" placeholder="Seu Nome" required>
-                    </div>
-                    <div class="form-group">
-                        <label>E-mail Corporativo</label>
-                        <input type="email" placeholder="seu.nome@mercantis.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Senha Segura</label>
-                        <input type="password" placeholder="Mínimo 8 caracteres" required>
-                    </div>
+                <form onsubmit="handleAuth(event, 'Registro inserido com sucesso na tabela `tb_usuarios`!', false)">
+                    <div class="form-group"><label>Nome Completo</label><input type="text" placeholder="Luzivania Bonfim" required></div>
+                    <div class="form-group"><label>E-mail Corporativo</label><input type="email" placeholder="luzivania.bonfim@mercantis.com" required></div>
+                    <div class="form-group"><label>Senha Segura</label><input type="password" placeholder="••••••••" required></div>
                     <button type="submit" class="btn-action">Finalizar Cadastro</button>
                 </form>
-                <div class="auth-switch">
-                    Já possui acesso? <span onclick="navigateTo('login')">Fazer Login</span>
-                </div>
             </div>
         </div>
 
     </div>
 
-    <!-- Feedback Pop-up -->
     <div id="toast-notification" class="toast">
-        <span id="toast-icon">🚀</span>
-        <span id="toast-message">Mensagem</span>
+        <span id="toast-icon">🚀</span><span id="toast-message">Mensagem</span>
     </div>
 
     <footer>
-        <p>&copy; 2026 - <strong>Mercantis Move2Cloud Project</strong></p>
+        <p>&copy; 2026 - <strong>Mercantis Move2Cloud Project</strong> [cite: 1]</p>
         <p style="font-size: 12px; margin-top: 5px; color: #718096;">Desenvolvido por Luzivania & Enzo | ESPM Sistemas de Informação e Negócios</p>
     </footer>
 
     <script>
         let cart = [];
+        // Quantidades iniciais simuladas do banco
+        let qtdUsuarios = 1;
+        let qtdProdutosIaaS = 0;
+        let qtdBicosConcluidos = 0;
 
         function navigateTo(pageId) {
             document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
@@ -298,6 +290,7 @@
 
             if (pageId === 'home') document.getElementById('btn-home').classList.add('active');
             else if (pageId === 'bicos') document.getElementById('btn-bicos').classList.add('active');
+            else if (pageId === 'db') document.getElementById('btn-db').classList.add('active');
             else if (pageId === 'login' || pageId === 'cadastro') document.getElementById('btn-login').classList.add('active');
             else if (pageId === 'cart') {
                 document.getElementById('btn-cart').classList.add('active');
@@ -314,15 +307,24 @@
             setTimeout(() => toast.classList.remove('show'), 3500);
         }
 
+        function testarConexaoRDS() {
+            triggerToast("🔍 Pingando cluster mercantis-db na AWS RDS...", "🔄");
+            setTimeout(() => {
+                triggerToast("🟢 Conectado! Instância operacional sob latência de 14ms.", "✅");
+            }, 1200);
+        }
+
         function addToCart(name, price, type) {
             const existingItem = cart.find(item => item.name === name);
-            if (existingItem) {
-                existingItem.qty += 1;
-            } else {
-                cart.push({ name, price, type, qty: 1 });
+            if (existingItem) { existingItem.qty += 1; } 
+            else { cart.push({ name, price, type, qty: 1 }); }
+            
+            if (type === 'R$') {
+                qtdProdutosIaaS++;
+                document.getElementById('db-prod-count').innerText = qtdProdutosIaaS;
             }
             updateCartBadge();
-            triggerToast(`Adicionado com sucesso: ${name}`, '🛒');
+            triggerToast(`Adicionado ao escopo da tabela: ${name}`, '🛒');
         }
 
         function updateCartBadge() {
@@ -331,102 +333,70 @@
         }
 
         function removeFromCart(index) {
+            const item = cart[index];
+            if (item.type === 'R$') {
+                qtdProdutosIaaS -= item.qty;
+                document.getElementById('db-prod-count').innerText = qtdProdutosIaaS;
+            } else {
+                qtdBicosConcluidos -= item.qty;
+                document.getElementById('db-job-count').innerText = qtdBicosConcluidos;
+            }
             cart.splice(index, 1);
             updateCartBadge();
             renderCart();
-            triggerToast('Item removido do escopo.', '🗑️');
+            triggerToast('Item removido das tabelas do banco.', '🗑️');
         }
 
         function renderCart() {
             const container = document.getElementById('cart-content');
             if (cart.length === 0) {
-                container.innerHTML = `<div class="empty-cart">Nenhum componente ou bico selecionado ainda. Explore as abas de Catálogo ou Pequenos Serviços!</div>`;
+                container.innerHTML = `<div class="empty-cart">Nenhum componente ou bico selecionado ainda. Explore as abas!</div>`;
                 return;
             }
-
-            let html = `
-                <table class="cart-table">
-                    <thead>
-                        <tr>
-                            <th>Componente / Serviço</th>
-                            <th>Tipo de Moeda</th>
-                            <th>Quantidade</th>
-                            <th>Preço Unitário</th>
-                            <th>Subtotal</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-
-            let totalBRL = 0;
-            let totalSims = 0;
-
+            let html = `<table class="cart-table"><thead><tr><th>Componente</th><th>Moeda</th><th>Qtd</th><th>Unitário</th><th>Subtotal</th><th>Ações</th></tr></thead><tbody>`;
+            let totalBRL = 0; let totalSims = 0;
             cart.forEach((item, index) => {
                 const subtotal = item.price * item.qty;
-                if (item.type === 'R$') totalBRL += subtotal;
-                else totalSims += subtotal;
-
-                html += `
-                    <tr>
-                        <td><strong>${item.name}</strong></td>
-                        <td>${item.type === 'R$' ? 'Real Comercial (Investimento)' : 'Simoleons (Fundo de Bicos)'}</td>
-                        <td>${item.qty}</td>
-                        <td>${item.type} ${item.price.toFixed(2)}</td>
-                        <td><strong>${item.type} ${subtotal.toFixed(2)}</strong></td>
-                        <td><button class="btn-remove" onclick="removeFromCart(${index})">Remover</button></td>
-                    </tr>
-                `;
+                if (item.type === 'R$') totalBRL += subtotal; else totalSims += subtotal;
+                html += `<tr><td><strong>${item.name}</strong></td><td>${item.type === 'R$' ? 'Real' : 'Simoleons'}</td><td>${item.qty}</td><td>${item.type} ${item.price.toFixed(2)}</td><td><strong>${item.type} ${subtotal.toFixed(2)}</strong></td><td><button class="btn-remove" onclick="removeFromCart(${index})">Remover</button></td></tr>`;
             });
-
-            html += `</tbody></table>`;
-            html += `<div class="cart-total-box">`;
-            if (totalBRL > 0) html += `<div>Custo de Infraestrutura/Serviços: <span style="color:#007bff">R$ ${totalBRL.toFixed(2)}</span></div>`;
-            if (totalSims > 0) html += `<div style="margin-top: 5px;">Fundos de Bicos Gerados: <span style="color:#28a745">§ ${totalSims.toFixed(2)} Simoleons</span></div>`;
+            html += `</tbody></table><div class="cart-total-box">`;
+            if (totalBRL > 0) html += `<div>Infraestrutura/Serviços: <span style="color:#007bff">R$ ${totalBRL.toFixed(2)}</span></div>`;
+            if (totalSims > 0) html += `<div style="margin-top: 5px;">Fundos de Bicos: <span style="color:#28a745">§ ${totalSims.toFixed(2)} Simoleons</span></div>`;
             html += `</div>`;
-
             container.innerHTML = html;
         }
 
-        function handleAuth(event, successMessage) {
+        function handleAuth(event, successMessage, isLogin) {
             event.preventDefault();
-            triggerToast(successMessage, '✨');
-            setTimeout(() => navigateTo('home'), 1500);
+            if (!isLogin) {
+                qtdUsuarios++;
+                document.getElementById('db-user-count').innerText = qtdUsuarios;
+            }
+            triggerToast(successMessage, '💾');
+            setTimeout(() => navigateTo('db'), 1500);
         }
 
         function startSimsJob(title, pay) {
             document.getElementById('job-title').innerText = title;
             navigateTo('trabalhando');
-            
             const progressFill = document.getElementById('progress-fill');
             const statusText = document.getElementById('job-status-text');
             progressFill.style.width = '0%';
             
-            const frasesSims = [
-                "Sul Sul! Iniciando as conexões de rede...",
-                "Rodando rotinas elásticas de teste no console AWS...",
-                "Discutindo a migração em Simlish com o time...",
-                "Sincronizando tabelas corporativas na nuvem...",
-                "Finalizando bico e emitindo nota de Simoleons..."
-            ];
-
             let progress = 0;
             const interval = setInterval(() => {
-                progress += 4;
+                progress += 5;
                 progressFill.style.width = progress + '%';
-                
-                if (progress % 20 === 0) {
-                    const randomFrase = frasesSims[Math.floor(Math.random() * frasesSims.length)];
-                    statusText.innerText = randomFrase;
-                }
-
                 if (progress >= 100) {
                     clearInterval(interval);
+                    qtdBicosConcluidos++;
+                    document.getElementById('db-job-count').innerText = qtdBicosConcluidos;
                     addToCart(title, pay, '§');
-                    triggerToast(`Dag Dag! Bico concluído. Saldo de § ${pay} enviado ao seu carrinho!`, '💎');
-                    setTimeout(() => navigateTo('cart'), 1200);
+                    triggerToast(`Dag Dag! Transação § ${pay} salva no banco!`, '💎');
+                    setTimeout(() => navigateTo('db'), 1000);
                 }
-            }, 150);
+            }, 100);
         }
     </script>
 </body>
