@@ -30,7 +30,7 @@
         .metric-val { font-size: 18px; font-weight: bold; color: #28a745; }
         .metric-lbl { font-size: 11px; color: #888; text-transform: uppercase; }
 
-        /* Vitrine de Produtos */
+        /* Vitrine de Produtos / Serviços */
         h2 { margin-bottom: 20px; color: #1a2a3a; font-size: 22px; position: relative; padding-bottom: 5px; }
         h2::after { content: ''; width: 50px; height: 3px; background: #00dbc6; position: absolute; bottom: 0; left: 0; }
         
@@ -50,6 +50,23 @@
         .btn-action { background-color: #00dbc6; color: #1a2a3a; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px; width: 100%; text-align: center; }
         .btn-action:hover { background-color: #00bfae; transform: scale(1.02); }
 
+        /* Estilo Exclusivo The Sims Mode */
+        .sims-headline { color: #3ba526 !important; font-weight: bold; }
+        .sims-headline::after { background: #3ba526 !important; }
+        .plumbob-icon { font-size: 24px; animation: float 2s ease-in-out infinite; display: inline-block; }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Tela de Execução do Serviço Sim */
+        .work-container { max-width: 600px; margin: 40px auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); text-align: center; border-top: 6px solid #3ba526; }
+        .sims-progress-bar { width: 100%; background-color: #edf2f7; height: 25px; border-radius: 20px; margin: 25px 0; overflow: hidden; border: 2px solid #cbd5e0; position: relative; }
+        .sims-progress-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #52c234, #061700); border-radius: 20px; transition: width 0.1s linear; }
+        .status-trabalho { font-style: italic; color: #4a5568; font-size: 16px; margin-top: 10px; min-height: 24px; }
+        
         /* Formulários (Login / Cadastro) */
         .auth-container { max-width: 450px; margin: 50px auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center; }
         .auth-container h2 { text-align: center; margin-bottom: 25px; }
@@ -57,17 +74,12 @@
         .form-group { text-align: left; margin-bottom: 20px; }
         .form-group label { display: block; margin-bottom: 6px; font-size: 14px; color: #4a5568; font-weight: 500; }
         .form-group input { width: 100%; padding: 12px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 15px; }
-        .form-group input:focus { border-color: #00dbc6; outline: none; box-shadow: 0 0 0 3px rgba(0,219,198,0.1); }
-        .auth-switch { margin-top: 20px; font-size: 14px; color: #718096; }
-        .auth-switch span { color: #007bff; cursor: pointer; font-weight: 500; }
-        .auth-switch span:hover { text-decoration: underline; }
 
-        /* Notificação Emocional Pop-up */
-        .toast { position: fixed; bottom: -100px; right: 30px; background: #1a2a3a; color: white; padding: 15px 30px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 12px; z-index: 9999; border-left: 4px solid #28a745; }
+        /* Notificação Pop-up */
+        .toast { position: fixed; bottom: -100px; right: 30px; background: #1a2a3a; color: white; padding: 15px 30px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 12px; z-index: 9999; border-left: 4px solid #3ba526; }
         .toast.show { bottom: 30px; }
 
         footer { background-color: #1a2a3a; color: #a0aec0; text-align: center; padding: 25px; margin-top: 60px; font-size: 14px; border-top: 4px solid #00dbc6; }
-        footer strong { color: white; }
     </style>
 </head>
 <body>
@@ -78,6 +90,7 @@
         </div>
         <div class="nav-links">
             <button id="btn-home" class="active" onclick="navigateTo('home')">Produtos</button>
+            <button id="btn-bicos" onclick="navigateTo('bicos')">🟢 Central de Bicos</button>
             <button id="btn-login" onclick="navigateTo('login')">Acessar Conta</button>
         </div>
     </nav>
@@ -91,18 +104,12 @@
                     <p>Aplicações e ambiente frontend operando de forma elástica a partir da instância EC2.</p>
                 </div>
                 <div class="metrics">
-                    <div class="metric-box">
-                        <div class="metric-val">99.9%</div>
-                        <div class="metric-lbl">Uptime SLO</div>
-                    </div>
-                    <div class="metric-box">
-                        <div class="metric-val">&lt; 300ms</div>
-                        <div class="metric-lbl">Latência</div>
-                    </div>
+                    <div class="metric-box"><div class="metric-val">99.9%</div><div class="metric-lbl">Uptime SLO</div></div>
+                    <div class="metric-box"><div class="metric-val">&lt; 300ms</div><div class="metric-lbl">Latência</div></div>
                 </div>
             </div>
 
-            <h2>Soluções Disponíveis</h2>
+            <h2>Soluções Corporativas</h2>
             <div class="vitrine">
                 <div class="card">
                     <div class="card-img">🏢<span class="tag-categoria">Corporativo</span></div>
@@ -110,29 +117,69 @@
                         <div class="card-title">Infraestrutura como Serviço</div>
                         <p class="card-text">Soluções completas de computação redimensionável para escalar as operações comerciais.</p>
                         <div class="card-price"><span>R$</span> 599,00 <span>/mês</span></div>
-                        <button class="btn-action" onclick="triggerToast('🚀 Excelente escolha! Solução adicionada ao escopo da migração.')">Contratar Solução</button>
+                        <button class="btn-action" onclick="triggerToast('🚀 Excelente escolha corporativa! Solução adicionada.')">Contratar Solução</button>
                     </div>
                 </div>
-
                 <div class="card">
                     <div class="card-img">🔒<span class="tag-categoria">Segurança</span></div>
                     <div class="card-body">
                         <div class="card-title">Pacote de Segurança Avançada</div>
                         <p class="card-text">Proteção perimetral com firewalls integrados e regras rígidas de acesso IAM para conformidade.</p>
                         <div class="card-price"><span>R$</span> 249,00 <span>/mês</span></div>
-                        <button class="btn-action" onclick="triggerToast('🔒 Segurança em primeiro lugar! Módulo ativado com sucesso.')">Adicionar à Solução</button>
+                        <button class="btn-action" onclick="triggerToast('🔒 Segurança em primeiro lugar! Módulo ativado.')">Adicionar à Solução</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-bicos" class="page">
+            <h2 class="sims-headline"><span class="plumbob-icon">💎</span> Quadro de Pequenos Serviços (Bicos)</h2>
+            <p style="margin-bottom: 25px; color: #555;">Escolha um pequeno serviço na nuvem AWS para faturar uns Simoleons extras e ajudar a manter a Mercantis Move2Cloud no ar!</p>
+            
+            <div class="vitrine">
+                <div class="card" style="border-top: 4px solid #3ba526;">
+                    <div class="card-img" style="background: #ebfbee;">💻<span class="tag-categoria" style="background: #3ba526;">Fácil</span></div>
+                    <div class="card-body">
+                        <div class="card-title">Reiniciar Roteador de Borda</div>
+                        <p class="card-text">A internet do escritório local caiu de novo e o pessoal da Mercantis não consegue acessar o console AWS. Vá lá dar um tapa no aparelho.</p>
+                        <div class="card-price" style="color: #3ba526;">§ 80 <span>Simoleons</span></div>
+                        <button class="btn-action" style="background-color: #3ba526; color: white;" onclick="startSimsJob('Reiniciar Roteador de Borda', 80)">Fazer esse Bico</button>
                     </div>
                 </div>
 
-                <div class="card">
-                    <div class="card-img">📊<span class="tag-categoria">Análise</span></div>
+                <div class="card" style="border-top: 4px solid #3ba526;">
+                    <div class="card-img" style="background: #ebfbee;">🧹<span class="tag-categoria" style="background: #3ba526;">Médio</span></div>
                     <div class="card-body">
-                        <div class="card-title">Módulo Analytics & Performance</div>
-                        <p class="card-text">Monitoramento em tempo real com registros de logs estruturados e métricas de negócio na nuvem.</p>
-                        <div class="card-price"><span>R$</span> 389,00 <span>/mês</span></div>
-                        <button class="btn-action" onclick="triggerToast('📊 Insights poderosos aguardam você! Módulo adicionado.')">Adicionar à Solução</button>
+                        <div class="card-title">Limpar Arquivos de Log e Cache</div>
+                        <p class="card-text">O disco rígido da instância EC2 está quase estourando de tanto log inútil acumulado. Delete tudo antes que cause um erro 502!</p>
+                        <div class="card-price" style="color: #3ba526;">§ 150 <span>Simoleons</span></div>
+                        <button class="btn-action" style="background-color: #3ba526; color: white;" onclick="startSimsJob('Limpar Arquivos de Log e Cache', 150)">Fazer esse Bico</button>
                     </div>
                 </div>
+
+                <div class="card" style="border-top: 4px solid #3ba526;">
+                    <div class="card-img" style="background: #ebfbee;">☕<span class="tag-categoria" style="background: #3ba526;">Urgente</span></div>
+                    <div class="card-body">
+                        <div class="card-title">Abastecer Café dos Devs</div>
+                        <p class="card-text">O Enzo e o time de desenvolvimento estão há 14 horas acordados programando o banco de dados. Leve café forte imediatamente!</p>
+                        <div class="card-price" style="color: #3ba526;">§ 300 <span>Simoleons</span></div>
+                        <button class="btn-action" style="background-color: #3ba526; color: white;" onclick="startSimsJob('Abastecer Café dos Devs', 300)">Fazer esse Bico</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-trabalhando" class="page">
+            <div class="work-container">
+                <div class="plumbob-icon" style="font-size: 45px;">💎</div>
+                <h2 id="job-title" style="margin: 15px 0; border: none;">Realizando Serviço...</h2>
+                <p style="color: #718096;">Seu Sim está focado trabalhando duro no ambiente de TI da Mercantis.</p>
+                
+                <div class="sims-progress-bar">
+                    <div id="progress-fill" class="sims-progress-fill"></div>
+                </div>
+                
+                <div id="job-status-text" class="status-trabalho">Removendo poeira dos cabos...</div>
             </div>
         </div>
 
@@ -140,51 +187,18 @@
             <div class="auth-container">
                 <h2>Acessar o Portal</h2>
                 <form onsubmit="handleAuth(event, 'Bem-vindo de volta! Carregando seu ambiente na nuvem...')">
-                    <div class="form-group">
-                        <label>E-mail Corporativo</label>
-                        <input type="email" placeholder="seu.nome@mercantis.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Senha de Acesso</label>
-                        <input type="password" placeholder="••••••••" required>
-                    </div>
+                    <div class="form-group"><label>E-mail Corporativo</label><input type="email" placeholder="seu.nome@mercantis.com" required></div>
+                    <div class="form-group"><label>Senha de Acesso</label><input type="password" placeholder="••••••••" required></div>
                     <button type="submit" class="btn-action">Entrar no Sistema</button>
                 </form>
-                <div class="auth-switch">
-                    Novo na Mercantis? <span onclick="navigateTo('cadastro')">Crie sua conta corporativa</span>
-                </div>
-            </div>
-        </div>
-
-        <div id="page-cadastro" class="page">
-            <div class="auth-container">
-                <h2>Criar Conta</h2>
-                <form onsubmit="handleAuth(event, '✨ Conta criada! Bem-vindo à nova era da Mercantis na nuvem.')">
-                    <div class="form-group">
-                        <label>Nome Completo</label>
-                        <input type="text" placeholder="Seu Nome" required>
-                    </div>
-                    <div class="form-group">
-                        <label>E-mail Corporativo</label>
-                        <input type="email" placeholder="seu.nome@mercantis.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Senha Segura</label>
-                        <input type="password" placeholder="Mínimo 8 caracteres" required>
-                    </div>
-                    <button type="submit" class="btn-action">Finalizar Cadastro</button>
-                </form>
-                <div class="auth-switch">
-                    Já possui acesso? <span onclick="navigateTo('login')">Fazer Login</span>
-                </div>
             </div>
         </div>
 
     </div>
 
     <div id="toast-notification" class="toast">
-        <span id="toast-icon">✅</span>
-        <span id="toast-message">Mensagem de feedback aqui!</span>
+        <span id="toast-icon">🟢</span>
+        <span id="toast-message">Mensagem aqui!</span>
     </div>
 
     <footer>
@@ -194,49 +208,66 @@
 
     <script>
         function navigateTo(pageId) {
-            // Esconde todas as páginas e remove a animação
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            document.querySelectorAll('.nav-links button').forEach(btn => {
-                btn.classList.remove('active');
-            });
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.querySelectorAll('.nav-links button').forEach(btn => btn.classList.remove('active'));
 
-            // Mostra a página escolhida com efeito suave
             const activePage = document.getElementById('page-' + pageId);
-            if (activePage) {
-                activePage.classList.add('active');
-            }
+            if (activePage) activePage.classList.add('active');
 
-            // Destaca o botão correto na navbar
-            if (pageId === 'home') {
-                document.getElementById('btn-home').classList.add('active');
-            } else if (pageId === 'login' || pageId === 'cadastro') {
-                document.getElementById('btn-login').classList.add('active');
-            }
+            if (pageId === 'home') document.getElementById('btn-home').classList.add('active');
+            else if (pageId === 'bicos') document.getElementById('btn-bicos').classList.add('active');
+            else if (pageId === 'login') document.getElementById('btn-login').classList.add('active');
             
-            // Rola para o topo automaticamente
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function triggerToast(message) {
             const toast = document.getElementById('toast-notification');
             document.getElementById('toast-message').innerText = message;
-            
             toast.classList.add('show');
-            
-            // Oculta a notificação após 4 segundos
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 4000);
+            setTimeout(() => toast.classList.remove('show'), 4000);
         }
 
         function handleAuth(event, successMessage) {
-            event.preventDefault(); // Impede a página de recarregar
+            event.preventDefault();
             triggerToast(successMessage);
-            setTimeout(() => {
-                navigateTo('home'); // Redireciona de volta para a Home após o login/cadastro
-            }, 1500);
+            setTimeout(() => navigateTo('home'), 1500);
+        }
+
+        // Sistema Emocional de Bicos do The Sims
+        function startSimsJob(title, pay) {
+            document.getElementById('job-title').innerText = title;
+            navigateTo('trabalhando');
+            
+            const progressFill = document.getElementById('progress-fill');
+            const statusText = document.getElementById('job-status-text');
+            progressFill.style.width = '0%';
+            
+            const frasesSims = [
+                "Sul Sul! Iniciando os preparativos...",
+                "Digitando comandos aleatórios no terminal da AWS...",
+                "Discutindo a arquitetura em Simlish (Reticula!)...",
+                "Tomando um susto com um bug inesperado...",
+                "Quase pronto, organizando os dados finais..."
+            ];
+
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 2;
+                progressFill.style.width = progress + '%';
+                
+                // Muda a frase de status aleatoriamente
+                if (progress % 20 === 0) {
+                    const randomFrase = frasesSims[Math.floor(Math.random() * frasesSims.length)];
+                    statusText.innerText = randomFrase;
+                }
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    triggerToast(`💰 Dag Dag! Serviço concluído! Você faturou § ${pay} Simoleons.`);
+                    setTimeout(() => navigateTo('bicos'), 1500);
+                }
+            }, 100); // 5 segundos de execução
         }
     </script>
 </body>
