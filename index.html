@@ -3,15 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minha Loja MVP</title>
+    <title>Mercantis - Painel MVP & E-Commerce</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; background-color: #f4f4f9; }
-        h1 { color: #333; }
-        p { color: #666; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f6f9; color: #333; }
+        
+        /* Navbar */
+        nav { background-color: #1a2a3a; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .logo { font-size: 22px; font-weight: bold; color: #00dbc6; display: flex; align-items: center; gap: 8px; }
+        .badge-cloud { background: #007bff; color: white; font-size: 11px; padding: 3px 8px; border-radius: 12px; font-weight: normal; }
+        
+        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+        
+        /* Banner de Status Cloud - Alinhado ao Roteiro */
+        .status-banner { background: white; border-left: 5px solid #00dbc6; padding: 20px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .status-info h3 { margin-bottom: 5px; color: #1a2a3a; }
+        .status-info p { color: #666; font-size: 14px; }
+        .metrics { display: flex; gap: 20px; }
+        .metric-box { text-align: center; background: #f8f9fa; padding: 10px 15px; border-radius: 6px; border: 1px solid #eee; }
+        .metric-val { font-size: 18px; font-weight: bold; color: #28a745; }
+        .metric-lbl { font-size: 11px; color: #888; text-transform: uppercase; }
+
+        /* Vitrine de Produtos */
+        h2 { margin-bottom: 20px; color: #1a2a3a; font-size: 22px; position: relative; padding-bottom: 5px; }
+        h2::after { content: ''; width: 50px; height: 3px; background: #00dbc6; position: absolute; bottom: 0; left: 0; }
+        
+        .vitrine { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+        
+        .card-img { height: 200px; background: #eaedf2; display: flex; align-items: center; justify-content: center; font-size: 50px; color: #a0aec0; position: relative; }
+        .tag-categoria { position: absolute; top: 10px; left: 10px; background: rgba(26, 42, 58, 0.85); color: white; font-size: 11px; padding: 4px 8px; border-radius: 4px; text-transform: uppercase; font-weight: bold; }
+        
+        .card-body { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
+        .card-title { font-size: 18px; color: #1a2a3a; margin-bottom: 10px; font-weight: 600; }
+        .card-text { font-size: 14px; color: #666; margin-bottom: 15px; line-height: 1.4; }
+        .card-price { font-size: 22px; font-weight: bold; color: #1a2a3a; margin-top: auto; margin-bottom: 15px; display: flex; align-items: baseline; gap: 4px; }
+        .card-price span { font-size: 14px; font-weight: normal; color: #888; }
+        
+        .btn-action { background-color: #00dbc6; color: #1a2a3a; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: background 0.2s; width: 100%; text-align: center; text-decoration: none; font-size: 15px; }
+        .btn-action:hover { background-color: #00bfae; }
+
+        footer { background-color: #1a2a3a; color: #a0aec0; text-align: center; padding: 25px; margin-top: 60px; font-size: 14px; border-top: 4px solid #00dbc6; }
+        footer strong { color: white; }
     </style>
 </head>
 <body>
-    <h1>Lojinha MVP-Ecommerce 🚀</h1>
-    <p>O site está funcionando perfeitamente direto do servidor AWS!</p>
+
+    <nav>
+        <div class="logo">
+            📦 Mercantis <span class="badge-cloud">Ambiente AWS Cloud</span>
+        </div>
+        <div style="font-size: 14px; color: #a0aec0;">MVP de Infraestrutura e Negócios</div>
+    </nav>
+
+    <div class="container">
+        
+        <div class="status-banner">
+            <div class="status-info">
+                <h3>🚀 Migração de Arquitetura Alvo ativa</h3>
+                <p>Aplicações e frontend operando de forma elástica a partir da instância EC2 pública.</p>
+            </div>
+            <div class="metrics">
+                <div class="metric-box">
+                    <div class="metric-val">99.9%</div>
+                    <div class="metric-lbl">Uptime SLO</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-val">&lt; 300ms</div>
+                    <div class="metric-lbl">Latência</div>
+                </div>
+            </div>
+        </div>
+
+        <h2>Produtos em Destaque</h2>
+        
+        <div class="vitrine">
+            <div class="card">
+                <div class="card-img">
+                    🏢
+                    <span class="tag-categoria">Corporativo</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-title">Infraestrutura como Serviço</div>
+                    <p class="card-text">Soluções completas de computação redimensionável para escalar as operações comerciais da sua empresa.</p>
+                    <div class="card-price"><span>R$</span> 599,00 <span>/mês</span></div>
+                    <button class="btn-action" onclick="alert('Item adicionado ao carrinho simulado!')">Contratar Solução</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img">
+                    🔒
+                    <span class="tag-categoria">Segurança</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-title">Pacote de Segurança Avançada</div>
+                    <p class="card-text">Proteção perimetral com firewalls integrados e gerenciamento rígido de permissões para dados em repouso.</p>
+                    <div class="card-price"><span>R$</span> 249,00 <span>/mês</span></div>
+                    <button class="btn-action" onclick="alert('Item adicionado ao carrinho simulado!')">Adicionar à Solução</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img">
+                    📊
+                    <span class="tag-categoria">Análise</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-title">Módulo Analytics & Performance</div>
+                    <p class="card-text">Monitoramento em tempo real com registros de logs e painéis de desempenho corporativo integrados.</p>
+                    <div class="card-price"><span>R$</span> 389,00 <span>/mês</span></div>
+                    <button class="btn-action" onclick="alert('Item adicionado ao carrinho simulado!')">Adicionar à Solução</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 - <strong>Mercantis Move2Cloud Project</strong></p>
+        <p style="font-size: 12px; margin-top: 5px; color: #718096;">Desenvolvido por Luzivania & Enzo | ESPM Sistemas de Informação e Negócios</p>
+    </footer>
+
 </body>
 </html>
