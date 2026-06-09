@@ -73,6 +73,18 @@
         .btn-remove { background: none; border: none; color: #e53e3e; cursor: pointer; font-size: 14px; }
         .btn-remove:hover { text-decoration: underline; }
 
+        /* Formulários (Login / Cadastro) */
+        .auth-wrapper { max-width: 450px; margin: 40px auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center; }
+        .auth-wrapper h2 { text-align: center; margin-bottom: 25px; }
+        .auth-wrapper h2::after { left: 50%; transform: translateX(-50%); }
+        .form-group { text-align: left; margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 6px; font-size: 14px; color: #4a5568; font-weight: 500; }
+        .form-group input { width: 100%; padding: 12px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 15px; }
+        .form-group input:focus { border-color: #00dbc6; outline: none; box-shadow: 0 0 0 3px rgba(0,219,198,0.1); }
+        .auth-switch { margin-top: 20px; font-size: 14px; color: #718096; }
+        .auth-switch span { color: #007bff; cursor: pointer; font-weight: 500; }
+        .auth-switch span:hover { text-decoration: underline; }
+
         /* Notificação Pop-up */
         .toast { position: fixed; bottom: -100px; right: 30px; background: #1a2a3a; color: white; padding: 15px 30px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 12px; z-index: 9999; border-left: 4px solid #00dbc6; }
         .toast.show { bottom: 30px; }
@@ -82,19 +94,22 @@
 </head>
 <body>
 
+    <!-- Navbar -->
     <nav>
         <div class="logo" onclick="navigateTo('home')">
             📦 Mercantis <span class="badge-cloud">AWS Cloud Portal</span>
         </div>
         <div class="nav-links">
             <button id="btn-home" class="active" onclick="navigateTo('home')">Catálogo</button>
-            <button id="btn-bicos" onclick="navigateTo('bicos')">🟢 Central de Bicos</button>
+            <button id="btn-bicos" onclick="navigateTo('bicos')">🟢 Pequenos Serviços</button>
             <button id="btn-cart" onclick="navigateTo('cart')">🛒 Meu Carrinho <span id="cart-badge-count" class="cart-count">0</span></button>
+            <button id="btn-login" onclick="navigateTo('login')">Acessar Conta</button>
         </div>
     </nav>
 
     <div class="container">
         
+        <!-- PÁGINA 1: HOME / CATÁLOGO DIVIDIDO -->
         <div id="page-home" class="page active">
             <div class="status-banner">
                 <div class="status-info">
@@ -107,6 +122,7 @@
                 </div>
             </div>
 
+            <!-- Seção 1: Infraestrutura como Serviço (IaaS) -->
             <h2 style="margin-top: 20px;">🏢 Infraestrutura como Serviço (IaaS)</h2>
             <p style="color: #666; margin-bottom: 20px; font-size: 14px;">Recursos de computação puros e dimensionáveis direto da AWS.</p>
             <div class="vitrine" style="margin-bottom: 50px;">
@@ -130,6 +146,7 @@
                 </div>
             </div>
 
+            <!-- Seção 2: Pacotes de Serviços -->
             <h2>📦 Pacotes de Serviços Gerenciados</h2>
             <p style="color: #666; margin-bottom: 20px; font-size: 14px;">Soluções completas e configuradas prontas para as regras de negócio.</p>
             <div class="vitrine">
@@ -154,8 +171,9 @@
             </div>
         </div>
 
+        <!-- PÁGINA 2: PEQUENOS SERVIÇOS (CENTRAL DE BICOS) -->
         <div id="page-bicos" class="page">
-            <h2 class="sims-headline"><span class="plumbob-icon">💎</span> Quadro de Pequenos Serviços (Bicos)</h2>
+            <h2 class="sims-headline"><span class="plumbob-icon">💎</span> Central de Bicos</h2>
             <p style="margin-bottom: 25px; color: #555;">Escolha um pequeno bico de TI da Mercantis. Conclua a tarefa para injetar fundos diretamente no orçamento corporativo!</p>
             
             <div class="vitrine">
@@ -189,6 +207,7 @@
             </div>
         </div>
 
+        <!-- PÁGINA 3: ANIMADO TRABALHANDO NO BICO -->
         <div id="page-trabalhando" class="page">
             <div class="work-container">
                 <div class="plumbob-icon" style="font-size: 45px;">💎</div>
@@ -199,18 +218,64 @@
             </div>
         </div>
 
+        <!-- PÁGINA 4: O CARRINHO DE COMPRAS SELECIONADO -->
         <div id="page-cart" class="page">
             <h2>🛒 Recursos e Serviços Selecionados</h2>
             <p style="color: #666; margin-bottom: 25px; font-size: 14px;">Gerencie os componentes que farão parte do escopo final da sua migração.</p>
-            
             <div class="cart-wrapper">
-                <div id="cart-content">
+                <div id="cart-content"></div>
+            </div>
+        </div>
+
+        <!-- PÁGINA 5: LOGIN -->
+        <div id="page-login" class="page">
+            <div class="auth-wrapper">
+                <h2>Acessar o Portal</h2>
+                <form onsubmit="handleAuth(event, 'Bem-vindo de volta! Carregando seu ambiente na nuvem...')">
+                    <div class="form-group">
+                        <label>E-mail Corporativo</label>
+                        <input type="email" placeholder="seu.nome@mercantis.com" required>
                     </div>
+                    <div class="form-group">
+                        <label>Senha de Acesso</label>
+                        <input type="password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn-action">Entrar no Sistema</button>
+                </form>
+                <div class="auth-switch">
+                    Novo na Mercantis? <span onclick="navigateTo('cadastro')">Crie sua conta corporativa</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- PÁGINA 6: CADASTRO -->
+        <div id="page-cadastro" class="page">
+            <div class="auth-wrapper">
+                <h2>Criar Conta</h2>
+                <form onsubmit="handleAuth(event, '✨ Conta criada! Bem-vindo à nova era da Mercantis na nuvem.')">
+                    <div class="form-group">
+                        <label>Nome Completo</label>
+                        <input type="text" placeholder="Seu Nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label>E-mail Corporativo</label>
+                        <input type="email" placeholder="seu.nome@mercantis.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Senha Segura</label>
+                        <input type="password" placeholder="Mínimo 8 caracteres" required>
+                    </div>
+                    <button type="submit" class="btn-action">Finalizar Cadastro</button>
+                </form>
+                <div class="auth-switch">
+                    Já possui acesso? <span onclick="navigateTo('login')">Fazer Login</span>
+                </div>
             </div>
         </div>
 
     </div>
 
+    <!-- Feedback Pop-up -->
     <div id="toast-notification" class="toast">
         <span id="toast-icon">🚀</span>
         <span id="toast-message">Mensagem</span>
@@ -222,7 +287,6 @@
     </footer>
 
     <script>
-        // Banco de Dados local simulado para persistência do Carrinho
         let cart = [];
 
         function navigateTo(pageId) {
@@ -234,6 +298,7 @@
 
             if (pageId === 'home') document.getElementById('btn-home').classList.add('active');
             else if (pageId === 'bicos') document.getElementById('btn-bicos').classList.add('active');
+            else if (pageId === 'login' || pageId === 'cadastro') document.getElementById('btn-login').classList.add('active');
             else if (pageId === 'cart') {
                 document.getElementById('btn-cart').classList.add('active');
                 renderCart();
@@ -249,9 +314,7 @@
             setTimeout(() => toast.classList.remove('show'), 3500);
         }
 
-        // Adicionar itens ao carrinho
         function addToCart(name, price, type) {
-            // Verifica se o item já está no carrinho
             const existingItem = cart.find(item => item.name === name);
             if (existingItem) {
                 existingItem.qty += 1;
@@ -274,11 +337,10 @@
             triggerToast('Item removido do escopo.', '🗑️');
         }
 
-        // Renderizar dinamicamente a tabela do carrinho
         function renderCart() {
             const container = document.getElementById('cart-content');
             if (cart.length === 0) {
-                container.innerHTML = `<div class="empty-cart">Nenhum componente ou bico selecionado ainda. Explore as abas de Catálogo ou Central de Bicos!</div>`;
+                container.innerHTML = `<div class="empty-cart">Nenhum componente ou bico selecionado ainda. Explore as abas de Catálogo ou Pequenos Serviços!</div>`;
                 return;
             }
 
@@ -318,21 +380,20 @@
             });
 
             html += `</tbody></table>`;
-            
-            // Caixa de totais dividida inteligentemente por moedas
             html += `<div class="cart-total-box">`;
-            if (totalBRL > 0) {
-                html += `<div>Custo de Infraestrutura/Serviços: <span style="color:#007bff">R$ ${totalBRL.toFixed(2)}</span></div>`;
-            }
-            if (totalSims > 0) {
-                html += `<div style="margin-top: 5px;">Fundos de Bicos Gerados: <span style="color:#28a745">§ ${totalSims.toFixed(2)} Simoleons</span></div>`;
-            }
+            if (totalBRL > 0) html += `<div>Custo de Infraestrutura/Serviços: <span style="color:#007bff">R$ ${totalBRL.toFixed(2)}</span></div>`;
+            if (totalSims > 0) html += `<div style="margin-top: 5px;">Fundos de Bicos Gerados: <span style="color:#28a745">§ ${totalSims.toFixed(2)} Simoleons</span></div>`;
             html += `</div>`;
 
             container.innerHTML = html;
         }
 
-        // Sistema Animado de Bicos do The Sims Mode
+        function handleAuth(event, successMessage) {
+            event.preventDefault();
+            triggerToast(successMessage, '✨');
+            setTimeout(() => navigateTo('home'), 1500);
+        }
+
         function startSimsJob(title, pay) {
             document.getElementById('job-title').innerText = title;
             navigateTo('trabalhando');
@@ -361,7 +422,6 @@
 
                 if (progress >= 100) {
                     clearInterval(interval);
-                    // Adiciona o bico ganho diretamente ao carrinho como saldo
                     addToCart(title, pay, '§');
                     triggerToast(`Dag Dag! Bico concluído. Saldo de § ${pay} enviado ao seu carrinho!`, '💎');
                     setTimeout(() => navigateTo('cart'), 1200);
